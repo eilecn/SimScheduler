@@ -2,6 +2,7 @@
 #define APP_H
 
 #include <string>
+#include "scheduler.h"
 
 /*
 *****************************
@@ -12,6 +13,7 @@
 
 class App {
  private:
+  Scheduler *scheduler_;
  public:
   App(void);
   ~App(void);

@@ -4,6 +4,7 @@
 
 #include "message.hpp"
 #include "utils.hpp"
+#include "scheduler.h"
 
 using namespace std;
 
@@ -20,7 +21,9 @@ App::~App() {}
 
 void App::TickTock(const std::string &num_ticktock) {}
 
-void App::AddScheduler() {}
+void App::AddScheduler() {
+  Message::SCHEDULER_ADDED.PrintMessage();
+}
 
 void App::RemoveScheduler() {}
 
