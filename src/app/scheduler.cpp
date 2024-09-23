@@ -1,11 +1,11 @@
 #include "scheduler.h"
 
-Scheduler::Scheduler()
-{
+#include <iostream>
 
-}
+#include "core.h"
 
-Scheduler::~Scheduler()
-{
+using namespace std;
 
-}
+Scheduler::Scheduler() { Core cores[8]; }
+
+Scheduler::~Scheduler() {}

@@ -5,6 +5,7 @@
 #include "message.hpp"
 #include "utils.hpp"
 #include "scheduler.h"
+#include "core.h"
 
 using namespace std;
 
@@ -15,17 +16,36 @@ using namespace std;
 *****************************
 */
 
-App::App() {}
+App::App() {
+  SchedulerExists = 0;
+}
 
 App::~App() {}
 
 void App::TickTock(const std::string &num_ticktock) {}
 
 void App::AddScheduler() {
-  Message::SCHEDULER_ADDED.PrintMessage();
+  if (SchedulerExists == 0) {
+    scheduler_ = new Scheduler();
+    SchedulerExists = 1;
+    Message::SCHEDULER_ADDED.PrintMessage();
+  } else {
+    Message::ERROR_SECOND_SCHEDULER.PrintMessage();
+  }
+  
 }
 
-void App::RemoveScheduler() {}
+void App::RemoveScheduler() {
+  if (SchedulerExists = 0) {
+    Message::ERROR_NO_SCHEDULERS.PrintMessage();
+    return;
+  } else {
+    delete scheduler_;
+    SchedulerExists = 0;
+    Message::SCHEDULER_REMOVED.PrintMessage();
+    return;
+  }
+}
 
 void App::AddCore(const std::string &core_type) {}
 

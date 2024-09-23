@@ -13,6 +13,7 @@
 
 class App {
  private:
+  bool SchedulerExists;
   Scheduler *scheduler_;
  public:
   App(void);

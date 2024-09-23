@@ -1,6 +1,8 @@
 #ifndef SCHEDULER_H
 #define SCHEDULER_H
 
+#include "core.h"
+
 class Scheduler
 {
 public:
@@ -8,6 +10,7 @@ public:
     ~Scheduler();
 
 private:
+ Core cores;
 
 };
 
