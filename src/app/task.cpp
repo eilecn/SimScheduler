@@ -11,6 +11,10 @@ Task::Task(const std::string id, const std::string duration, const std::string p
   priority_ = stoi(priority);
 }
 
+Task::Task() {
+  
+}
+
 Task::~Task()
 {
 

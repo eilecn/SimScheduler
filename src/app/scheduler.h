@@ -6,11 +6,11 @@
 class Scheduler
 {
 public:
-    Scheduler();
-    ~Scheduler();
+ Scheduler();
+ ~Scheduler();
+ Core* head;
 
 private:
- Core cores;
 
 };
 

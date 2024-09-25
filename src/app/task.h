@@ -7,6 +7,7 @@
 class Task
 {
 public:
+ Task();
     Task(const std::string id, const std::string duration, const std::string priority);
     ~Task();
 
