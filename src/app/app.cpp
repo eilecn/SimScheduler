@@ -20,6 +20,7 @@ using namespace std;
 App::App() {
   SchedulerExists = 0;
   core_id_ = 0;
+  system_time_ = 0;
 }
 
 App::~App() {}
@@ -48,6 +49,10 @@ void App::RemoveScheduler() {
 }
 
 void App::AddCore(const std::string &core_type) {
+  if (SchedulerExists == 0) {
+    Message::ERROR_NO_SCHEDULERS.PrintMessage();
+    return;
+  }
   core_type_ = Utils::GetUppercase(core_type);
   if (core_id_ == 0) {
     core_linked_list_ = CoreLinkedList();
@@ -60,6 +65,7 @@ void App::AddCore(const std::string &core_type) {
     return;
   } else if (core_type_ == "PRIORITY") {
     Priority* new_priority_core_ = new Priority(to_string(core_id_));
+    core_linked_list_.Add(new_priority_core_);
     Message::CORE_ADDED.PrintMessage({core_type_, to_string(core_id_)});
     core_id_++;
     return;
@@ -73,8 +79,11 @@ void App::RemoveCore(const std::string &core_id) {
   if (SchedulerExists == 0) {
     Message::ERROR_NO_SCHEDULERS.PrintMessage();
     return;
+  } else if (core_linked_list_.GetCore(core_id) == nullptr) {
+    Message::ERROR_NO_CORE.PrintMessage({core_id});
   } else {
-    return;
+    Core* core_to_delete = core_linked_list_.GetCore(core_id);
+    core_linked_list_.Remove(core_to_delete);
   }
 }
 

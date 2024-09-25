@@ -24,6 +24,7 @@ class App {
   Priority* new_priority_core_;
   int core_id_;
   CoreLinkedList core_linked_list_;
+  int system_time_;
 
  public:
   App(void);

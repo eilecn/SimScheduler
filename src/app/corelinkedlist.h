@@ -9,6 +9,8 @@ public:
     CoreLinkedList();
     ~CoreLinkedList();
     void Add(Core* new_core);
+    void Remove(Core* core_to_delete);
+    Core* GetCore(std::string core_id) const;
 
 private:
  Core* head;
