@@ -7,7 +7,7 @@ class Scheduler {
  public:
   Scheduler();
   ~Scheduler();
-  Core* head;
+  Core* head_;
 
  private:
 };

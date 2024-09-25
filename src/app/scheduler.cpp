@@ -7,6 +7,6 @@
 
 using namespace std;
 
-Scheduler::Scheduler() { head = nullptr; }
+Scheduler::Scheduler() { head_ = nullptr; }
 
 Scheduler::~Scheduler() { Message::SCHEDULER_REMOVED.PrintMessage(); }

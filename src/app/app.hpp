@@ -17,7 +17,7 @@
 
 class App {
  private:
-  bool SchedulerExists;
+  bool scheduler_exists_;
   Scheduler *scheduler_;
   std::string core_type_;
   Fifo *new_fifo_core_;

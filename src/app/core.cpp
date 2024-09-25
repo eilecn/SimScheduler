@@ -8,12 +8,12 @@
 
 using namespace std;
 
-Core::Core() {}
-
 Core::Core(std::string core_id) {
   core_id_ = stoi(core_id);
   next = nullptr;
 }
+
+Core::Core() {}
 
 Core::~Core() { Message::CORE_REMOVED.PrintMessage({to_string(core_id_)}); }
 
