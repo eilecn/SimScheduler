@@ -1,6 +1,7 @@
 #ifndef PRIORITY_H
 #define PRIORITY_H
 #include <string>
+
 #include "core.h"
 
 class Priority : public Core {

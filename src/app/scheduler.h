@@ -3,15 +3,13 @@
 
 #include "core.h"
 
-class Scheduler
-{
-public:
- Scheduler();
- ~Scheduler();
- Core* head;
+class Scheduler {
+ public:
+  Scheduler();
+  ~Scheduler();
+  Core* head;
 
-private:
-
+ private:
 };
 
 #endif

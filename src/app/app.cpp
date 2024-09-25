@@ -1,12 +1,14 @@
 #include "app.hpp"
+
 #include <iostream>
+
 #include "core.h"
+#include "corelinkedlist.h"
 #include "fifo.h"
 #include "message.hpp"
 #include "priority.h"
 #include "scheduler.h"
 #include "utils.hpp"
-#include "corelinkedlist.h"
 
 using namespace std;
 
@@ -58,13 +60,13 @@ void App::AddCore(const std::string &core_type) {
     core_linked_list_ = CoreLinkedList();
   }
   if (core_type_ == "FIFO") {
-    Fifo* new_fifo_core_ = new Fifo(to_string(core_id_));
+    Fifo *new_fifo_core_ = new Fifo(to_string(core_id_));
     core_linked_list_.Add(new_fifo_core_);
     Message::CORE_ADDED.PrintMessage({core_type_, to_string(core_id_)});
     core_id_++;
     return;
   } else if (core_type_ == "PRIORITY") {
-    Priority* new_priority_core_ = new Priority(to_string(core_id_));
+    Priority *new_priority_core_ = new Priority(to_string(core_id_));
     core_linked_list_.Add(new_priority_core_);
     Message::CORE_ADDED.PrintMessage({core_type_, to_string(core_id_)});
     core_id_++;
@@ -82,7 +84,7 @@ void App::RemoveCore(const std::string &core_id) {
   } else if (core_linked_list_.GetCore(core_id) == nullptr) {
     Message::ERROR_NO_CORE.PrintMessage({core_id});
   } else {
-    Core* core_to_delete = core_linked_list_.GetCore(core_id);
+    Core *core_to_delete = core_linked_list_.GetCore(core_id);
     core_linked_list_.Remove(core_to_delete);
   }
 }
