@@ -7,6 +7,7 @@
 #include "fifo.h"
 #include "priority.h"
 #include "scheduler.h"
+#include "tasklinkedlist.h"
 
 /*
 *****************************
@@ -25,6 +26,8 @@ class App {
   int core_id_;
   CoreLinkedList core_linked_list_;
   int system_time_;
+  int task_id_;
+  TaskLinkedList task_linked_list_;
 
  public:
   App(void);

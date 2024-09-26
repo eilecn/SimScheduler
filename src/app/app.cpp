@@ -8,6 +8,8 @@
 #include "message.hpp"
 #include "priority.h"
 #include "scheduler.h"
+#include "task.h"
+#include "tasklinkedlist.h"
 #include "utils.hpp"
 
 using namespace std;
@@ -23,6 +25,7 @@ App::App() {
   scheduler_exists_ = 0;
   core_id_ = 0;
   system_time_ = 0;
+  task_id_ = 0;
 }
 
 App::~App() {}
@@ -96,10 +99,31 @@ void App::AddTask(const std::string &task_time, const std::string &priority) {
     Message::ERROR_NO_SCHEDULERS.PrintMessage();
     return;
   }
+
+  if (task_id_ == 0) {
+    task_linked_list_ = TaskLinkedList();
+  }
+
+  Task *new_task = new Task(to_string(task_id_), task_time, priority);
+  task_linked_list_.Add(new_task);
+  Message::TASK_ADDED.PrintMessage({to_string(task_id_), task_time, priority});
+  task_id_++;
   return;
 }
 
-void App::RemoveTask(const std::string &task_id) {}
+void App::RemoveTask(const std::string &task_id) {
+  if (scheduler_exists_ == 0) {
+    Message::ERROR_NO_SCHEDULERS.PrintMessage();
+    return;
+  } else if (task_linked_list_.GetTask(task_id) == nullptr) {
+    Message::ERROR_NO_CORE.PrintMessage({task_id});
+    return;
+  } else {
+    Task *task_to_delete = task_linked_list_.GetTask(task_id);
+    task_linked_list_.Remove(task_to_delete);
+    return;
+  }
+}
 
 void App::ShowCore(const std::string &core_id) const {
   if (scheduler_exists_ == 0) {
@@ -115,4 +139,16 @@ void App::ShowCore(const std::string &core_id) const {
   }
 }
 
-void App::ShowTask(const std::string &task_id) const {}
+void App::ShowTask(const std::string &task_id) const {
+  if (scheduler_exists_ == 0) {
+    Message::ERROR_NO_SCHEDULERS.PrintMessage();
+    return;
+  } else if (task_linked_list_.GetTask(task_id) == nullptr) {
+    Message::ERROR_NO_TASK.PrintMessage({task_id});
+    return;
+  } else {
+    Task *task_to_show = task_linked_list_.GetTask(task_id);
+    // Message::SHOW_TASK.PrintMessage({});
+    return;
+  }
+}
