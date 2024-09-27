@@ -30,7 +30,9 @@ App::App() {
 
 App::~App() {}
 
-void App::TickTock(const std::string &num_ticktock) {}
+void App::TickTock(const std::string &num_ticktock) {
+  
+}
 
 void App::AddScheduler() {
   if (scheduler_exists_ == 0) {
@@ -115,12 +117,27 @@ void App::RemoveTask(const std::string &task_id) {
   if (scheduler_exists_ == 0) {
     Message::ERROR_NO_SCHEDULERS.PrintMessage();
     return;
-  } else if (task_linked_list_.GetTask(task_id) == nullptr) {
-    Message::ERROR_NO_CORE.PrintMessage({task_id});
+  }
+
+  Core *head_core = core_linked_list_.GetHead();
+  if (head_core == nullptr) {
+    Message::ERROR_NO_CORES.PrintMessage();
     return;
-  } else {
-    Task *task_to_delete = task_linked_list_.GetTask(task_id);
-    task_linked_list_.Remove(task_to_delete);
+  }
+  Task *head_task = task_linked_list_.GetHead();
+  while (head_core != nullptr) {
+    while (head_task != nullptr) {
+      if (head_task->GetTaskId() == stoi(task_id)) {
+        task_linked_list_.Remove(head_task);
+        return;
+      }
+      head_task = head_task->GetNextTask();
+    }
+    head_core = head_core->GetNextCore();
+  }
+
+  if (head_core == nullptr) {
+    Message::ERROR_NO_TASK.PrintMessage({task_id});
     return;
   }
 }

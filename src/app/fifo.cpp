@@ -9,7 +9,8 @@
 
 using namespace std;
 
-Fifo::Fifo(std::string core_id) : Core(core_id) {}
+Fifo::Fifo(std::string core_id) : Core(core_id) {
+}
 
 Fifo::Fifo() {}
 

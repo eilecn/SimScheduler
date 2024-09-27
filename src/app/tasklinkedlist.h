@@ -7,12 +7,17 @@ class TaskLinkedList {
  public:
   TaskLinkedList();
   ~TaskLinkedList();
-  void Add(Task* new_task);
+  virtual void Add(Task* new_task);
   void Remove(Task* task_to_delete);
   Task* GetTask(std::string task_id) const;
+  int GetExecutionTime() const;
+  Task* GetHead() const;
+  void TickTock(int time);
 
  private:
   Task* head;
+  int time_;
+  int execution_time_;
 };
 
 #endif

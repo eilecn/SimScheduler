@@ -2,6 +2,7 @@
 #define FIFO_H
 
 #include "core.h"
+#include <string>
 
 class Fifo : public Core {
  public:
@@ -10,6 +11,7 @@ class Fifo : public Core {
   ~Fifo();
 
  private:
+
 };
 
 #endif

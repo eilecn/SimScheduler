@@ -3,6 +3,7 @@
 #include <string>
 
 #include "task.h"
+#include "tasklinkedlist.h"
 
 class Core {
  public:
@@ -12,10 +13,13 @@ class Core {
   int GetCoreId() const;
   Core* GetNextCore() const;
   void SetNextCore(Core* next_core);
+  void TickTock(int time);
 
  private:
   int core_id_;
-  Core* next;
+  Core* next_;
+  Task* core_tasks_;
+  int time_;
 };
 
 #endif

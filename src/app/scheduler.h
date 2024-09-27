@@ -7,9 +7,11 @@ class Scheduler {
  public:
   Scheduler();
   ~Scheduler();
-  Core* head_;
+  void TickTock(int time);
 
  private:
+  Core* head_;
+  int time_;
 };
 
 #endif

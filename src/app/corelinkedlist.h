@@ -10,9 +10,11 @@ class CoreLinkedList {
   void Add(Core* new_core);
   void Remove(Core* core_to_delete);
   Core* GetCore(std::string core_id) const;
+  Core* GetHead() const;
 
  private:
-  Core* head;
+  Core* head_;
+  Task* core_tasks_;
 };
 
 #endif
