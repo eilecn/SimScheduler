@@ -78,10 +78,11 @@
     "complex": "cpp",
     "execution": "cpp",
     "ios": "cpp",
-    "locale": "cpp"
+    "locale": "cpp",
+    "xstring": "cpp"
   },
   "editor.tabSize": 2,
   "editor.insertSpaces": true,
   "editor.formatOnSave": true,
-  "C_Cpp.clang_format_fallbackStyle": "Google",
+  "C_Cpp.clang_format_fallbackStyle": "Google"
 }

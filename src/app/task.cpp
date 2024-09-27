@@ -1,8 +1,9 @@
 #include "task.h"
 
 #include <iostream>
-#include "message.hpp"
 #include <string>
+
+#include "message.hpp"
 
 using namespace std;
 
@@ -28,6 +29,4 @@ Task* Task::GetNextTask() const { return next_; }
 
 void Task::SetNextTask(Task* next_task) { next_ = next_task; }
 
-void Task::SetTaskDuration(int duration_to_set) {
-  duration_ = duration_to_set;
-}
+void Task::SetTaskDuration(int duration_to_set) { duration_ = duration_to_set; }

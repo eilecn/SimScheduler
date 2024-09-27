@@ -15,7 +15,7 @@ class TaskLinkedList {
   void TickTock(int time);
 
  private:
-  Task* head;
+  Task* head_;
   int time_;
   int execution_time_;
 };

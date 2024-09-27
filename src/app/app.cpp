@@ -30,9 +30,7 @@ App::App() {
 
 App::~App() {}
 
-void App::TickTock(const std::string &num_ticktock) {
-
-}
+void App::TickTock(const std::string &num_ticktock) {}
 
 void App::AddScheduler() {
   if (scheduler_exists_ == 0) {
@@ -65,14 +63,14 @@ void App::AddCore(const std::string &core_type) {
     core_linked_list_ = CoreLinkedList();
   }
   if (core_type_ == "fifo") {
-    Fifo *new_fifo_core_ = new Fifo(to_string(core_id_));
-    core_linked_list_.Add(new_fifo_core_);
+    Fifo *new_fifo_core = new Fifo(to_string(core_id_));
+    core_linked_list_.Add(new_fifo_core);
     Message::CORE_ADDED.PrintMessage({core_type_, to_string(core_id_)});
     core_id_++;
     return;
   } else if (core_type_ == "priority") {
-    Priority *new_priority_core_ = new Priority(to_string(core_id_));
-    core_linked_list_.Add(new_priority_core_);
+    Priority *new_priority_core = new Priority(to_string(core_id_));
+    core_linked_list_.Add(new_priority_core);
     Message::CORE_ADDED.PrintMessage({core_type_, to_string(core_id_)});
     core_id_++;
     return;
