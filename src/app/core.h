@@ -18,8 +18,9 @@ class Core {
  private:
   int core_id_;
   Core* next_;
-  Task* core_tasks_;
+  TaskLinkedList* core_tasks_;
   int time_;
+  Task* first_task_;
 };
 
 #endif

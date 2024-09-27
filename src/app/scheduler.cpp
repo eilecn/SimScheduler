@@ -4,6 +4,8 @@
 
 #include "core.h"
 #include "message.hpp"
+#include "tasklinkedlist.h"
+#include "task.h"
 
 using namespace std;
 
@@ -14,6 +16,7 @@ Scheduler::~Scheduler() { Message::SCHEDULER_REMOVED.PrintMessage(); }
 void Scheduler::TickTock(int time) {
   time_ = time_ + time;
   while (head_ != nullptr) {
-    //ticktock on each core
+    head_->TickTock(time);
+    head_ = head_->GetNextCore();
   }
 }

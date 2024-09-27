@@ -12,7 +12,8 @@ using namespace std;
 Core::Core(std::string core_id) {
   core_id_ = stoi(core_id);
   next_ = nullptr;
-  core_tasks_ = TaskLinkedList().GetHead();
+  core_tasks_ = new TaskLinkedList();
+  first_task_ = core_tasks_->GetHead();
   time_ = 0;
 }
 
@@ -28,7 +29,7 @@ void Core::SetNextCore(Core* next_core) { next_ = next_core; }
 
 void Core::TickTock(int time) {
   time_ = time_ + time;
-  while (next_ != nullptr) {
-    // ticktock on tasklinkedlist
+  for (int i = 0; i < time; i++) {
+    core_tasks_->TickTock(time);
   }
 }

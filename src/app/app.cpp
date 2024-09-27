@@ -31,7 +31,7 @@ App::App() {
 App::~App() {}
 
 void App::TickTock(const std::string &num_ticktock) {
-  
+
 }
 
 void App::AddScheduler() {
@@ -60,17 +60,17 @@ void App::AddCore(const std::string &core_type) {
     Message::ERROR_NO_SCHEDULERS.PrintMessage();
     return;
   }
-  core_type_ = Utils::GetUppercase(core_type);
+  core_type_ = Utils::GetLowercase(core_type);
   if (core_id_ == 0) {
     core_linked_list_ = CoreLinkedList();
   }
-  if (core_type_ == "FIFO") {
+  if (core_type_ == "fifo") {
     Fifo *new_fifo_core_ = new Fifo(to_string(core_id_));
     core_linked_list_.Add(new_fifo_core_);
     Message::CORE_ADDED.PrintMessage({core_type_, to_string(core_id_)});
     core_id_++;
     return;
-  } else if (core_type_ == "PRIORITY") {
+  } else if (core_type_ == "priority") {
     Priority *new_priority_core_ = new Priority(to_string(core_id_));
     core_linked_list_.Add(new_priority_core_);
     Message::CORE_ADDED.PrintMessage({core_type_, to_string(core_id_)});
