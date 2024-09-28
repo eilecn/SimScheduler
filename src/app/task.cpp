@@ -8,13 +8,14 @@
 using namespace std;
 
 Task::Task(const std::string id, const std::string time,
-           const std::string priority) {
+           const std::string priority, const std::string arrival_time) {
   task_id_ = stoi(id);
   duration_ = stoi(time);
   original_duration_ = stoi(time);
   priority_ = stoi(priority);
   next_ = nullptr;
   time_in_system_ = 0;
+  arrival_time_ = stoi(arrival_time);
 }
 
 Task::Task() {}
@@ -41,10 +42,8 @@ void Task::SubractOneTick() {
   }
 }
 
-void Task::IncrementTimeInSystem() {
-  time_in_system_ += 1;
-}
+void Task::IncrementTimeInSystem() { time_in_system_ += 1; }
 
-int Task::GetTimeInSystem() const {
-  return time_in_system_;
-}
+int Task::GetTimeInSystem() const { return time_in_system_; }
+
+int Task::GetArrivalTime() const { return arrival_time_; }

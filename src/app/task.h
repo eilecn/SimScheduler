@@ -7,7 +7,7 @@ class Task {
  public:
   Task();
   Task(const std::string id, const std::string time,
-       const std::string priority);
+       const std::string priority, const std::string arrival_time);
   ~Task();
   int GetTaskId() const;
   Task* GetNextTask() const;
@@ -19,6 +19,7 @@ class Task {
   void SubractOneTick();
   void IncrementTimeInSystem();
   int GetTimeInSystem() const;
+  int GetArrivalTime() const;
 
  private:
   int task_id_;
@@ -27,6 +28,7 @@ class Task {
   Task* next_;
   int original_duration_;
   int time_in_system_;
+  int arrival_time_;
 };
 
 #endif

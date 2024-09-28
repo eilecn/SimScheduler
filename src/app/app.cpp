@@ -117,7 +117,8 @@ void App::AddTask(const std::string &task_time, const std::string &priority) {
     Message::ERROR_NO_SCHEDULERS.PrintMessage();
     return;
   }
-  Task *new_task = new Task(to_string(task_id_), task_time, priority);
+  Task *new_task = new Task(to_string(task_id_), task_time, priority,
+                            to_string(system_time_));
   scheduler_->AddTask(new_task);
   Message::TASK_ADDED.PrintMessage({to_string(task_id_), task_time, priority});
   task_id_++;
@@ -129,15 +130,15 @@ void App::RemoveTask(const std::string &task_id) {
     Message::ERROR_NO_SCHEDULERS.PrintMessage();
     return;
   }
-  Task* task_to_remove = scheduler_->GetTask(task_id);
+  Task *task_to_remove = scheduler_->GetTask(task_id);
 
-  Core* temp = scheduler_->GetCoreHead();
+  Core *temp = scheduler_->GetCoreHead();
 
-    if (task_to_remove == nullptr) {
+  if (task_to_remove == nullptr) {
     Message::ERROR_NO_TASK.PrintMessage({task_id});
     return;
   }
-  
+
   while (temp != nullptr) {
     if (temp->GetFirstTask() == task_to_remove) {
       Message::TASK_NOT_REMOVED.PrintMessage({task_id});
@@ -146,9 +147,10 @@ void App::RemoveTask(const std::string &task_id) {
     temp = temp->GetNextCore();
   }
 
-  Core* core_to_remove_task = scheduler_->GetTaskCore(task_id);
+  Core *core_to_remove_task = scheduler_->GetTaskCore(task_id);
   core_to_remove_task->RemoveTask(task_to_remove);
-  Message::TASK_REMOVED.PrintMessage({task_id, "was not", to_string(system_time_)});
+  Message::TASK_REMOVED.PrintMessage(
+      {task_id, "was not", to_string(system_time_)});
   return;
 }
 
@@ -172,13 +174,16 @@ void App::ShowTask(const std::string &task_id) const {
   if (scheduler_exists_ == 0) {
     Message::ERROR_NO_SCHEDULERS.PrintMessage();
     return;
-    // } else if (task_linked_list_.GetTask(task_id) == nullptr) {
-    //   Message::ERROR_NO_TASK.PrintMessage({task_id});
-    //   return;
-    // } else {
-    //   Task *task_to_show = task_linked_list_.GetTask(task_id);
-    //   // Message::SHOW_TASK.PrintMessage({});
-    //   return;
-    // }
+  } else if (scheduler_->GetTask(task_id) == nullptr) {
+    Message::ERROR_NO_TASK.PrintMessage({task_id});
+    return;
+  } else {
+    Task *task_to_show = scheduler_->GetTask(task_id);
+    Message::SHOW_TASK.PrintMessage(
+        {task_id, to_string(task_to_show->GetArrivalTime()),
+         to_string(task_to_show->GetOriginalTaskDuration()),
+         to_string(task_to_show->GetTaskDuration()),
+         to_string(task_to_show->GetPriority())});
+    return;
   }
 }
