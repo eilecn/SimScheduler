@@ -14,14 +14,12 @@ Task::Task(const std::string id, const std::string time,
   original_duration_ = stoi(time);
   priority_ = stoi(priority);
   next_ = nullptr;
+  time_in_system_ = 0;
 }
 
 Task::Task() {}
 
-Task::~Task() {
-  Message::TASK_REMOVED.PrintMessage(
-      {to_string(task_id_), to_string(this->GetTaskId()), "0"});
-}
+Task::~Task() {}
 
 int Task::GetTaskId() const { return task_id_; }
 
@@ -36,3 +34,17 @@ void Task::SetTaskDuration(int duration_to_set) { duration_ = duration_to_set; }
 int Task::GetOriginalTaskDuration() const { return original_duration_; }
 
 int Task::GetPriority() const { return priority_; }
+
+void Task::SubractOneTick() {
+  if (duration_ > 0) {
+    duration_ = duration_ - 1;
+  }
+}
+
+void Task::IncrementTimeInSystem() {
+  time_in_system_ += 1;
+}
+
+int Task::GetTimeInSystem() const {
+  return time_in_system_;
+}

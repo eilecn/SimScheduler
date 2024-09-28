@@ -24,7 +24,7 @@ void Priority::AddTask(Task* task) {
     return;
   }
 
-  if (task->GetPriority() > first_task_->GetPriority()) {
+  if (task->GetPriority() < first_task_->GetPriority()) {
     task->SetNextTask(first_task_);
     first_task_ = task;
     assigned_tasks_++;
@@ -33,7 +33,7 @@ void Priority::AddTask(Task* task) {
 
   Task* current = first_task_;
   while (current->GetNextTask() != nullptr &&
-         current->GetNextTask()->GetPriority() >= task->GetPriority()) {
+         current->GetNextTask()->GetPriority() <= task->GetPriority()) {
     current = current->GetNextTask();
   }
 

@@ -70,6 +70,11 @@ void App::AddCore(const std::string &core_type) {
   }
   std::string core_type_to_add = Utils::GetLowercase(core_type);
 
+  if (scheduler_->GetNumberOfCores() >= 8) {
+    Message::ERROR_MAX_CORES.PrintMessage();
+    return;
+  }
+
   if (core_type_to_add == "fifo") {
     Fifo *new_fifo_core = new Fifo(to_string(core_id_));
     scheduler_->AddCore(new_fifo_core);
@@ -98,6 +103,8 @@ void App::RemoveCore(const std::string &core_id) {
   } else if (scheduler_->GetCore(core_id) == nullptr) {
     Message::ERROR_NO_CORE.PrintMessage({core_id});
     return;
+  } else if (scheduler_->GetCore(core_id)->GetPendingExecutionTime() > 0) {
+    Message::ERROR_CORE_NOT_FREE.PrintMessage({core_id});
   } else {
     Core *core_to_delete = scheduler_->GetCore(core_id);
     scheduler_->RemoveCore(core_to_delete);

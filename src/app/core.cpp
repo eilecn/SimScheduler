@@ -32,15 +32,24 @@ void Core::SetNextCore(Core* next_core) { next_ = next_core; }
 
 void Core::TickTock() {
   Task* temp = first_task_;
+  while (temp != nullptr) {
+    temp->IncrementTimeInSystem();
+    temp = temp->GetNextTask();
+  }
+  temp = first_task_;
   if (first_task_ != nullptr) {
-    int task_duration = first_task_->GetTaskDuration();
-    first_task_->SetTaskDuration(task_duration - 1);
+    first_task_->SubractOneTick();
     time_++;
     if (first_task_->GetTaskDuration() == 0) {
-      this->RemoveTask(first_task_);
       Message::TASK_REMOVED.PrintMessage(
           {to_string(first_task_->GetTaskId()), "was",
-           to_string(time_ - first_task_->GetOriginalTaskDuration())});
+           to_string(first_task_->GetTimeInSystem() -
+                     first_task_->GetOriginalTaskDuration())});
+      temp = first_task_;
+      first_task_ = first_task_->GetNextTask();
+      completed_tasks_++;
+      assigned_tasks_--;
+      delete temp;
     }
   }
 }
@@ -74,7 +83,8 @@ void Core::AddTask(Task* task) {
 
 void Core::RemoveTask(Task* task) {
   core_tasks_->RemoveTask(task);
-  completed_tasks_--;
+  completed_tasks_++;
+  assigned_tasks_--;
   return;
 }
 

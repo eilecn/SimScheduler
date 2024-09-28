@@ -14,9 +14,11 @@ class Task {
   void SetNextTask(Task* next_task);
   void SetTaskDuration(int duration_to_set);
   int GetTaskDuration() const;
-  void TickTock(int time);
   int GetOriginalTaskDuration() const;
   int GetPriority() const;
+  void SubractOneTick();
+  void IncrementTimeInSystem();
+  int GetTimeInSystem() const;
 
  private:
   int task_id_;
@@ -24,6 +26,7 @@ class Task {
   int priority_;
   Task* next_;
   int original_duration_;
+  int time_in_system_;
 };
 
 #endif
