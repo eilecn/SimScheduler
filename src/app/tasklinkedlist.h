@@ -10,7 +10,7 @@ class TaskLinkedList {
   Task* GetTask(std::string task_id) const;
   int GetExecutionTime() const;
   Task* GetHead() const;
-  void RemoveTask(Task* task_to_remove);
+  void SetHead(Task* task);
 
  private:
   Task* head_;

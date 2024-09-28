@@ -13,7 +13,7 @@ Core::Core(std::string core_id) {
   core_id_ = stoi(core_id);
   next_ = nullptr;
   core_tasks_ = new TaskLinkedList();
-  first_task_ = core_tasks_->GetHead();
+  first_task_ = nullptr;
   pending_execution_time_ = 0;
   assigned_tasks_ = 0;
   completed_tasks_ = 0;
@@ -58,6 +58,7 @@ int Core::GetPendingExecutionTime() const {
   int total = 0;
   Task* temp = first_task_;
   while (temp != nullptr) {
+    cout << "TASK ID: " << temp->GetTaskId() << endl;
     total = total + temp->GetTaskDuration();
     temp = temp->GetNextTask();
   }
@@ -66,8 +67,9 @@ int Core::GetPendingExecutionTime() const {
 
 void Core::AddTask(Task* task) {
   Task* temp = first_task_;
-
   if (temp == nullptr) {
+    core_tasks_->SetHead(task);
+    cout << "HELP: " << to_string(task->GetTaskId()) << endl;
     first_task_ = task;
     assigned_tasks_++;
     return;
@@ -82,10 +84,37 @@ void Core::AddTask(Task* task) {
 }
 
 void Core::RemoveTask(Task* task) {
-  core_tasks_->RemoveTask(task);
+  Task* temp = first_task_;
+  if (first_task_ == nullptr || task == nullptr) {
+    return;
+  }
+
+  if (first_task_->GetTaskId() == task->GetTaskId()) {
+    Task* temp = first_task_;
+    first_task_ = first_task_->GetNextTask();
+    delete temp;
+    return;
+  }
+
+  Task* current = first_task_;
+  Task* previous = nullptr;
+
+  while (current != nullptr &&
+         current->GetTaskId() != task->GetTaskId()) {
+    previous = current;
+    current = current->GetNextTask();
+  }
+
+  if (current == nullptr) {
+    return;
+  }
+
+  if (previous != nullptr) {
+    previous->SetNextTask(current->GetNextTask());
+  }
+  delete current;
   completed_tasks_++;
   assigned_tasks_--;
-  return;
 }
 
 Task* Core::GetFirstTask() const { return first_task_; }

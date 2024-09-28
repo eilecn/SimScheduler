@@ -31,6 +31,10 @@ App::App() {
 App::~App() {}
 
 void App::TickTock(const std::string &num_ticktock) {
+  if (scheduler_exists_ == 0) {
+    Message::ERROR_NO_SCHEDULERS.PrintMessage();
+    return;
+  }
   system_time_ = system_time_ + stoi(num_ticktock);
   for (int i = 0; i < stoi(num_ticktock); i++) {
     scheduler_->TickTock();
@@ -49,16 +53,18 @@ void App::AddScheduler() {
 }
 
 void App::RemoveScheduler() {
-  cout << scheduler_->GetNumberOfCores() << endl;
-  if (scheduler_exists_ == 0) {
+  if (scheduler_exists_ == 0 || scheduler_ == nullptr) {
     Message::ERROR_NO_SCHEDULERS.PrintMessage();
     return;
-  } else if (scheduler_->GetNumberOfCores() > 0) {
+  }
+  if (scheduler_->GetNumberOfCores() > 0) {
     Message::ERROR_CORES.PrintMessage();
     return;
   } else {
     delete scheduler_;
     scheduler_exists_ = 0;
+    core_id_ = 0;
+    system_time_ = 0;
     return;
   }
 }
@@ -104,6 +110,7 @@ void App::RemoveCore(const std::string &core_id) {
     Message::ERROR_NO_CORE.PrintMessage({core_id});
     return;
   } else if (scheduler_->GetCore(core_id)->GetPendingExecutionTime() > 0) {
+    cout << "TIME LEFT: " << scheduler_->GetCore(core_id)->GetPendingExecutionTime() << endl;
     Message::ERROR_CORE_NOT_FREE.PrintMessage({core_id});
   } else {
     Core *core_to_delete = scheduler_->GetCore(core_id);
@@ -115,6 +122,9 @@ void App::RemoveCore(const std::string &core_id) {
 void App::AddTask(const std::string &task_time, const std::string &priority) {
   if (scheduler_exists_ == 0) {
     Message::ERROR_NO_SCHEDULERS.PrintMessage();
+    return;
+  } else if (scheduler_->GetCoreHead() == nullptr) {
+    Message::ERROR_NO_CORES.PrintMessage();
     return;
   }
   Task *new_task = new Task(to_string(task_id_), task_time, priority,
@@ -146,6 +156,7 @@ void App::RemoveTask(const std::string &task_id) {
     }
     temp = temp->GetNextCore();
   }
+  delete temp;
 
   Core *core_to_remove_task = scheduler_->GetTaskCore(task_id);
   core_to_remove_task->RemoveTask(task_to_remove);
@@ -158,7 +169,10 @@ void App::ShowCore(const std::string &core_id) const {
   if (scheduler_exists_ == 0) {
     Message::ERROR_NO_SCHEDULERS.PrintMessage();
     return;
-  } else if (scheduler_->GetCore(core_id) == nullptr) {
+  } else if (scheduler_->GetNumberOfCores() == 0) {
+    Message::ERROR_NO_CORES.PrintMessage();
+    return;
+  }else if (scheduler_->GetCore(core_id) == nullptr) {
     Message::ERROR_NO_CORE.PrintMessage({core_id});
     return;
   } else {

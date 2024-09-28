@@ -72,7 +72,6 @@ Core* CoreLinkedList::GetHead() const { return head_; }
 
 void CoreLinkedList::AddTask(Task* task_to_add) {
   if (head_ == nullptr) {
-    Message::ERROR_NO_CORES.PrintMessage();
     return;
   }
   Core* temp = head_;
@@ -88,3 +87,4 @@ void CoreLinkedList::AddTask(Task* task_to_add) {
   core_to_add_task->AddTask(task_to_add);
   return;
 }
+

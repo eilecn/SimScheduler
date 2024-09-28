@@ -2,8 +2,8 @@
 
 #include <iostream>
 
-#include "task.h"
 #include "message.hpp"
+#include "task.h"
 
 using namespace std;
 
@@ -35,34 +35,6 @@ int TaskLinkedList::GetExecutionTime() const { return execution_time_; }
 
 Task* TaskLinkedList::GetHead() const { return head_; }
 
-void TaskLinkedList::RemoveTask(Task* task_to_remove) {
-  if (head_ == nullptr || task_to_remove == nullptr) {
-    return;
-  }
-
-  if (head_->GetTaskId() == task_to_remove->GetTaskId()) {
-    Task* temp = head_;
-    head_ = head_->GetNextTask();
-    delete temp;
-    return;
-  }
-
-  Task* current = head_;
-  Task* previous = nullptr;
-
-  while (current != nullptr &&
-         current->GetTaskId() != task_to_remove->GetTaskId()) {
-    previous = current;
-    current = current->GetNextTask();
-  }
-
-  if (current == nullptr) {
-    return;
-  }
-
-  if (previous != nullptr) {
-    previous->SetNextTask(current->GetNextTask());
-  }
-  delete current;
-  return;
+void TaskLinkedList::SetHead(Task* task) {
+  head_ = task;
 }
