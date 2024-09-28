@@ -6,8 +6,8 @@
 class Task {
  public:
   Task();
-  Task(const std::string id, const std::string time,
-       const std::string priority, const std::string arrival_time);
+  Task(const std::string id, const std::string time, const std::string priority,
+       const std::string arrival_time);
   ~Task();
   int GetTaskId() const;
   Task* GetNextTask() const;

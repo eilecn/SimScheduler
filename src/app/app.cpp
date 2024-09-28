@@ -171,7 +171,7 @@ void App::ShowCore(const std::string &core_id) const {
   } else if (scheduler_->GetNumberOfCores() == 0) {
     Message::ERROR_NO_CORES.PrintMessage();
     return;
-  }else if (scheduler_->GetCore(core_id) == nullptr) {
+  } else if (scheduler_->GetCore(core_id) == nullptr) {
     Message::ERROR_NO_CORE.PrintMessage({core_id});
     return;
   } else {

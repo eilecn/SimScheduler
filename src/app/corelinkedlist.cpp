@@ -87,4 +87,3 @@ void CoreLinkedList::AddTask(Task* task_to_add) {
   core_to_add_task->AddTask(task_to_add);
   return;
 }
-

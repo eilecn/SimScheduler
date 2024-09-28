@@ -35,6 +35,4 @@ int TaskLinkedList::GetExecutionTime() const { return execution_time_; }
 
 Task* TaskLinkedList::GetHead() const { return head_; }
 
-void TaskLinkedList::SetHead(Task* task) {
-  head_ = task;
-}
+void TaskLinkedList::SetHead(Task* task) { head_ = task; }

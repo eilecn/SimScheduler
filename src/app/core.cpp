@@ -97,8 +97,7 @@ void Core::RemoveTask(Task* task) {
   Task* current = first_task_;
   Task* previous = nullptr;
 
-  while (current != nullptr &&
-         current->GetTaskId() != task->GetTaskId()) {
+  while (current != nullptr && current->GetTaskId() != task->GetTaskId()) {
     previous = current;
     current = current->GetNextTask();
   }
