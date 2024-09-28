@@ -33,8 +33,9 @@ App::~App() {}
 void App::TickTock(const std::string &num_ticktock) {
   system_time_ = system_time_ + stoi(num_ticktock);
   for (int i = 0; i < stoi(num_ticktock); i++) {
-    // ticktock scheduler by 1 tick
+    scheduler_->TickTock();
   }
+  Message::SIMSCHEDULER_CLOCK.PrintMessage({to_string(system_time_)});
 }
 
 void App::AddScheduler() {
@@ -110,18 +111,7 @@ void App::AddTask(const std::string &task_time, const std::string &priority) {
     return;
   }
   Task *new_task = new Task(to_string(task_id_), task_time, priority);
-  int shortest_time = scheduler_->GetCoreHead()->GetPendingExecutionTime();
-  Core *shortest_execution_core = scheduler_->GetCoreHead();
-  Core *temp = scheduler_->GetCoreHead();
-  while (temp != nullptr) {
-    if (temp->GetPendingExecutionTime() < shortest_time) {
-      shortest_time = temp->GetPendingExecutionTime();
-      shortest_execution_core = temp;
-    }
-    temp = temp->GetNextCore();
-  }
-  temp->AddTask(new_task);
-  delete temp;
+  scheduler_->AddTask(new_task);
   Message::TASK_ADDED.PrintMessage({to_string(task_id_), task_time, priority});
   task_id_++;
   return;
@@ -132,22 +122,27 @@ void App::RemoveTask(const std::string &task_id) {
     Message::ERROR_NO_SCHEDULERS.PrintMessage();
     return;
   }
+  Task* task_to_remove = scheduler_->GetTask(task_id);
 
-  Core *head_core = scheduler_->GetCoreHead();
-  if (head_core == nullptr) {
-    Message::ERROR_NO_CORES.PrintMessage();
+  Core* temp = scheduler_->GetCoreHead();
+
+    if (task_to_remove == nullptr) {
+    Message::ERROR_NO_TASK.PrintMessage({task_id});
     return;
-  } else {
-    while (head_core != nullptr) {
-      Task *temp = head_core->GetFirstTask();
-      while (temp != nullptr) {
-        if (temp->GetTaskId() == stoi(task_id)) {
-          head_core->RemoveTask(head_core->GetTask(task_id));
-          return;
-        }
-      }
-    }
   }
+  
+  while (temp != nullptr) {
+    if (temp->GetFirstTask() == task_to_remove) {
+      Message::TASK_NOT_REMOVED.PrintMessage({task_id});
+      return;
+    }
+    temp = temp->GetNextCore();
+  }
+
+  Core* core_to_remove_task = scheduler_->GetTaskCore(task_id);
+  core_to_remove_task->RemoveTask(task_to_remove);
+  Message::TASK_REMOVED.PrintMessage({task_id, "was not", to_string(system_time_)});
+  return;
 }
 
 void App::ShowCore(const std::string &core_id) const {

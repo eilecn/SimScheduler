@@ -9,6 +9,7 @@ class Priority : public Core {
   Priority();
   Priority(std::string core_id);
   ~Priority();
+  void AddTask(Task* task_to_add) override;
 
  private:
 };

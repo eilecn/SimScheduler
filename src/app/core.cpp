@@ -17,6 +17,7 @@ Core::Core(std::string core_id) {
   pending_execution_time_ = 0;
   assigned_tasks_ = 0;
   completed_tasks_ = 0;
+  time_ = 0;
 }
 
 Core::Core() {}
@@ -31,10 +32,16 @@ void Core::SetNextCore(Core* next_core) { next_ = next_core; }
 
 void Core::TickTock() {
   Task* temp = first_task_;
-  int task_duration = first_task_->GetTaskDuration();
-  first_task_->SetTaskDuration(task_duration - 1);
-  if (first_task_->GetTaskDuration() == 0) {
-    this->RemoveTask(first_task_);
+  if (first_task_ != nullptr) {
+    int task_duration = first_task_->GetTaskDuration();
+    first_task_->SetTaskDuration(task_duration - 1);
+    time_++;
+    if (first_task_->GetTaskDuration() == 0) {
+      this->RemoveTask(first_task_);
+      Message::TASK_REMOVED.PrintMessage(
+          {to_string(first_task_->GetTaskId()), "was",
+           to_string(time_ - first_task_->GetOriginalTaskDuration())});
+    }
   }
 }
 
@@ -51,46 +58,24 @@ int Core::GetPendingExecutionTime() const {
 void Core::AddTask(Task* task) {
   Task* temp = first_task_;
 
-  while (temp != nullptr) {
-    temp->GetNextTask();
+  if (temp == nullptr) {
+    first_task_ = task;
+    assigned_tasks_++;
+    return;
+  }
+
+  while (temp->GetNextTask() != nullptr) {
+    temp = temp->GetNextTask();
   }
   temp->SetNextTask(task);
   assigned_tasks_++;
-  delete temp;
+  return;
 }
 
 void Core::RemoveTask(Task* task) {
-  int task_id_to_remove = task->GetTaskId();
-  Task* temp = first_task_;
-
-  if (first_task_ == nullptr || task == nullptr) {
-    return;
-  }
-
-  if (first_task_->GetTaskId() == task->GetTaskId()) {
-    Task* temp = first_task_;
-    first_task_ = first_task_->GetNextTask();
-    delete temp;
-    return;
-  }
-
-  Task* current = first_task_;
-  Task* previous = nullptr;
-
-  while (current != nullptr && current->GetTaskId() != task->GetTaskId()) {
-    previous = current;
-    current = current->GetNextTask();
-  }
-
-  if (current == nullptr) {
-    return;
-  }
-
-  if (previous != nullptr) {
-    previous->SetNextTask(current->GetNextTask());
-  }
-  assigned_tasks_--;
-  delete current;
+  core_tasks_->RemoveTask(task);
+  completed_tasks_--;
+  return;
 }
 
 Task* Core::GetFirstTask() const { return first_task_; }
@@ -101,7 +86,7 @@ Task* Core::GetTask(std::string task_id) const {
     if (temp->GetTaskId() == stoi(task_id)) {
       return temp;
     }
-    temp->GetNextTask();
+    temp = temp->GetNextTask();
   }
   return nullptr;
 }

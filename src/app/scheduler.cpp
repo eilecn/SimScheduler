@@ -19,10 +19,10 @@ Scheduler::~Scheduler() { Message::SCHEDULER_REMOVED.PrintMessage(); }
 void Scheduler::TickTock() {
   Core* temp = core_linked_list_.GetHead();
   while (temp != nullptr) {
-    //ticktock each core
+    temp->TickTock();
     temp = temp->GetNextCore();
-    return;
   }
+  return;
 }
 
 void Scheduler::AddCore(Core* core_to_add) {
@@ -59,4 +59,39 @@ int Scheduler::GetNumberOfCores() const {
   }
   delete temp;
   return number;
+}
+
+void Scheduler::AddTask(Task* task_to_add) {
+  core_linked_list_.AddTask(task_to_add);
+  return;
+}
+
+Task* Scheduler::GetTask(std::string task_id) {
+  Core* temp = core_linked_list_.GetHead();
+  if (temp == nullptr) {
+    Message::ERROR_NO_CORES.PrintMessage();
+    return nullptr;
+  }
+  while (temp != nullptr) {
+    if (temp->GetTask(task_id) != nullptr) {
+      return temp->GetTask(task_id);
+    }
+    temp = temp->GetNextCore();
+  }
+  return nullptr;
+}
+
+Core* Scheduler::GetTaskCore(std::string task_id) {
+  Core* temp = core_linked_list_.GetHead();
+  if (temp == nullptr) {
+    Message::ERROR_NO_CORES.PrintMessage();
+    return nullptr;
+  }
+  while (temp != nullptr) {
+    if (temp->GetTask(task_id) != nullptr) {
+      return temp;
+    }
+    temp = temp->GetNextCore();
+  }
+  return nullptr;
 }

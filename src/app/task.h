@@ -15,12 +15,15 @@ class Task {
   void SetTaskDuration(int duration_to_set);
   int GetTaskDuration() const;
   void TickTock(int time);
+  int GetOriginalTaskDuration() const;
+  int GetPriority() const;
 
  private:
   int task_id_;
   int duration_;
   int priority_;
   Task* next_;
+  int original_duration_;
 };
 
 #endif

@@ -22,7 +22,7 @@ class Core {
   int GetAssignedTasksNumber() const;
   int GetCompletedTasksNumber() const;
 
- private:
+ protected:
   int core_id_;
   Core* next_;
   TaskLinkedList* core_tasks_;
@@ -30,6 +30,7 @@ class Core {
   int pending_execution_time_;
   int assigned_tasks_;
   int completed_tasks_;
+  int time_;
 };
 
 #endif

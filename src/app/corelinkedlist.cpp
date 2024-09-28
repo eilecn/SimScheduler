@@ -3,10 +3,14 @@
 #include <iostream>
 
 #include "core.h"
+#include "message.hpp"
 
 using namespace std;
 
-CoreLinkedList::CoreLinkedList() { head_ = nullptr; core_tasks_ = nullptr;}
+CoreLinkedList::CoreLinkedList() {
+  head_ = nullptr;
+  core_tasks_ = nullptr;
+}
 
 CoreLinkedList::~CoreLinkedList() {}
 
@@ -64,6 +68,23 @@ Core* CoreLinkedList::GetCore(std::string core_id) const {
   return nullptr;
 }
 
-Core* CoreLinkedList::GetHead() const {
-  return head_;
+Core* CoreLinkedList::GetHead() const { return head_; }
+
+void CoreLinkedList::AddTask(Task* task_to_add) {
+  if (head_ == nullptr) {
+    Message::ERROR_NO_CORES.PrintMessage();
+    return;
+  }
+  Core* temp = head_;
+  Core* core_to_add_task = head_;
+  int shortest_time = temp->GetPendingExecutionTime();
+  while (temp != nullptr) {
+    if (temp->GetPendingExecutionTime() < shortest_time) {
+      shortest_time = temp->GetPendingExecutionTime();
+      core_to_add_task = temp;
+    }
+    temp = temp->GetNextCore();
+  }
+  core_to_add_task->AddTask(task_to_add);
+  return;
 }
