@@ -12,7 +12,10 @@ CoreLinkedList::CoreLinkedList() {
   core_tasks_ = nullptr;
 }
 
-CoreLinkedList::~CoreLinkedList() {}
+CoreLinkedList::~CoreLinkedList() {
+  delete this->head_;
+  delete this->core_tasks_;
+}
 
 void CoreLinkedList::Add(Core* new_core) {
   if (head_ == nullptr) {

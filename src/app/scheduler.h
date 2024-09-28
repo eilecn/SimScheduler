@@ -20,7 +20,7 @@ class Scheduler {
 
  private:
   int time_;
-  CoreLinkedList core_linked_list_;
+  CoreLinkedList* core_linked_list_;
   int number_of_cores_;
 };
 
