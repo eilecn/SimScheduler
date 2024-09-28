@@ -110,7 +110,6 @@ void App::RemoveCore(const std::string &core_id) {
     Message::ERROR_NO_CORE.PrintMessage({core_id});
     return;
   } else if (scheduler_->GetCore(core_id)->GetPendingExecutionTime() > 0) {
-    cout << "TIME LEFT: " << scheduler_->GetCore(core_id)->GetPendingExecutionTime() << endl;
     Message::ERROR_CORE_NOT_FREE.PrintMessage({core_id});
   } else {
     Core *core_to_delete = scheduler_->GetCore(core_id);
@@ -161,7 +160,7 @@ void App::RemoveTask(const std::string &task_id) {
   Core *core_to_remove_task = scheduler_->GetTaskCore(task_id);
   core_to_remove_task->RemoveTask(task_to_remove);
   Message::TASK_REMOVED.PrintMessage(
-      {task_id, "was not", to_string(system_time_)});
+      {task_id, "was not", to_string(task_to_remove->GetTimeInSystem())});
   return;
 }
 

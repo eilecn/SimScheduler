@@ -58,7 +58,6 @@ int Core::GetPendingExecutionTime() const {
   int total = 0;
   Task* temp = first_task_;
   while (temp != nullptr) {
-    cout << "TASK ID: " << temp->GetTaskId() << endl;
     total = total + temp->GetTaskDuration();
     temp = temp->GetNextTask();
   }
@@ -69,7 +68,6 @@ void Core::AddTask(Task* task) {
   Task* temp = first_task_;
   if (temp == nullptr) {
     core_tasks_->SetHead(task);
-    cout << "HELP: " << to_string(task->GetTaskId()) << endl;
     first_task_ = task;
     assigned_tasks_++;
     return;
