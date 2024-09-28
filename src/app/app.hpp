@@ -20,12 +20,9 @@ class App {
  private:
   bool scheduler_exists_;
   Scheduler *scheduler_;
-  std::string core_type_;
   int core_id_;
-  CoreLinkedList core_linked_list_;
   int system_time_;
   int task_id_;
-  TaskLinkedList task_linked_list_;
 
  public:
   App(void);

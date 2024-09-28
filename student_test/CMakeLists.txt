@@ -2,7 +2,7 @@ option(CUSTOM_CASES_PART_1 "Run the Custom Test Cases for Part 1" ON)
 option(CUSTOM_CASES_PART_2 "Run the Custom Test Cases for Part 1" ON)
 
 # Add the test executable and link it with the library targets
-add_executable(tester_private ./tester.cpp)
+add_executable(tester_private tester.cpp)
 
 # Include the "src" directory to access the source files
 target_include_directories(tester_private PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../src)
@@ -112,5 +112,19 @@ if (CUSTOM_CASES_PART_2)
     add_test(NAME Part_2_AddCoreRemoveCoreTwiceWithTasks COMMAND tester_private 70)
     add_test(NAME Part_2_AddFifoWhileExecuting COMMAND tester_private 71)
     add_test(NAME Part_2_AddPriorityWhileExecuting COMMAND tester_private 72)
+    add_test(NAME Part_2_AddMaxCores COMMAND tester_private 73)
+    add_test(NAME Part_2_AddMaxCoresRemoveAddAgain COMMAND tester_private 74)
+
+    # Tests for showing tasks mid-execution TODO: Unsure if this implementation is correct, need to check
+    add_test(NAME Part_2_ShowTasksMidExecutionFifoCore COMMAND tester_private 75)
+    add_test(NAME Part_2_ShowTasksMidExecutionPriorityCore COMMAND tester_private 76)
+    add_test(NAME Part_2_ShowTasksMidExecutionMixedCores COMMAND tester_private 77)
+
+    # Tests for removing tasks not first in the queue
+    add_test(NAME Part_2_RemoveTaskNotFirstInQueueFifo COMMAND tester_private 78)
+    add_test(NAME Part_2_RemoveTaskNotFirstInQueuePriority COMMAND tester_private 79)
+    add_test(NAME Part_2_RemoveTaskAlreadyStartedExecutingNotFirstInQueue COMMAND tester_private 80)
+
+
 
 endif ()
