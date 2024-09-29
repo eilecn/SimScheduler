@@ -40,7 +40,7 @@ void Core::TickTock() {
   }
   temp = core_tasks_->GetHead();
   if (temp != nullptr) {
-    temp->SubractOneTick();
+    temp->Tick();
     time_++;
     if (temp->GetTaskDuration() == 0) {
       Message::TASK_REMOVED.PrintMessage(
@@ -65,9 +65,7 @@ int Core::GetPendingExecutionTime() const {
   return total;
 }
 
-void Core::AddTask(Task* task) {
-  return;
-}
+void Core::AddTask(Task* task) { return; }
 
 void Core::RemoveTask(Task* task) {
   Task* temp = core_tasks_->GetHead();

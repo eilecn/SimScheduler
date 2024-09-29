@@ -16,7 +16,7 @@ class Task {
   int GetTaskDuration() const;
   int GetOriginalTaskDuration() const;
   int GetPriority() const;
-  void SubractOneTick();
+  void Tick();
   void IncrementTimeInSystem();
   int GetTimeInSystem() const;
   int GetArrivalTime() const;

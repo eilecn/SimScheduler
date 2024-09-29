@@ -36,7 +36,7 @@ int Task::GetOriginalTaskDuration() const { return original_duration_; }
 
 int Task::GetPriority() const { return priority_; }
 
-void Task::SubractOneTick() {
+void Task::Tick() {
   if (duration_ > 0) {
     duration_ = duration_ - 1;
   }
