@@ -15,7 +15,7 @@ class Core {
   void SetNextCore(Core* next_core);
   void TickTock();
   int GetPendingExecutionTime() const;
-  virtual void AddTask(Task* task);
+  virtual void AddTask(Task* task) = 0;
   Task* GetFirstTask() const;
   virtual void RemoveTask(Task* task);
   Task* GetTask(std::string task_id) const;
@@ -26,7 +26,6 @@ class Core {
   int core_id_;
   Core* next_;
   TaskLinkedList* core_tasks_;
-  Task* first_task_;
   int pending_execution_time_;
   int assigned_tasks_;
   int completed_tasks_;

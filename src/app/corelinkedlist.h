@@ -16,7 +16,6 @@ class CoreLinkedList {
 
  private:
   Core* head_;
-  Task* core_tasks_;
 };
 
 #endif

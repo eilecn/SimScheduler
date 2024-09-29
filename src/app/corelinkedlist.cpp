@@ -7,15 +7,9 @@
 
 using namespace std;
 
-CoreLinkedList::CoreLinkedList() {
-  head_ = nullptr;
-  core_tasks_ = nullptr;
-}
+CoreLinkedList::CoreLinkedList() { head_ = nullptr; }
 
-CoreLinkedList::~CoreLinkedList() {
-  delete this->head_;
-  delete this->core_tasks_;
-}
+CoreLinkedList::~CoreLinkedList() { delete this->head_; }
 
 void CoreLinkedList::Add(Core* new_core) {
   if (head_ == nullptr) {

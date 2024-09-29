@@ -18,7 +18,7 @@ TaskLinkedList::TaskLinkedList() {
   delete temp;
 }
 
-TaskLinkedList::~TaskLinkedList() { delete this->head_; }
+TaskLinkedList::~TaskLinkedList() { delete head_; }
 
 Task* TaskLinkedList::GetTask(std::string task_id) const {
   Task* temp = head_;

@@ -9,6 +9,7 @@ class Fifo : public Core {
   Fifo();
   Fifo(std::string core_id);
   ~Fifo();
+  void AddTask(Task* task_to_add) override;
 
  private:
 };

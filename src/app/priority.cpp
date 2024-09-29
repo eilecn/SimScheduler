@@ -18,22 +18,21 @@ Priority::~Priority() {
 }
 
 void Priority::AddTask(Task* task) {
-  Task* temp = first_task_;
+  Task* temp = core_tasks_->GetHead();;
   if (temp == nullptr) {
     core_tasks_->SetHead(task);
-    first_task_ = task;
     assigned_tasks_++;
     return;
   }
 
   if (task->GetPriority() < temp->GetPriority()) {
-    task->SetNextTask(first_task_);
-    first_task_ = task;
+    task->SetNextTask(core_tasks_->GetHead());
+    core_tasks_->SetHead(task);
     assigned_tasks_++;
     return;
   }
 
-  Task* current = first_task_;
+  Task* current = core_tasks_->GetHead();
   while (current->GetNextTask() != nullptr &&
          current->GetNextTask()->GetPriority() <= task->GetPriority()) {
     current = current->GetNextTask();
