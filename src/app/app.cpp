@@ -177,7 +177,8 @@ void App::ShowCore(const std::string &core_id) const {
   } else {
     Core *core_to_show = scheduler_->GetCore(core_id);
     Message::SHOW_CORE.PrintMessage(
-        {core_id, to_string(core_to_show->GetAssignedTasksNumber()),
+        {to_string(stoi(core_id)),
+         to_string(core_to_show->GetAssignedTasksNumber()),
          to_string(core_to_show->GetCompletedTasksNumber())});
     return;
   }
